@@ -1,6 +1,9 @@
+# encoding: utf-8
+
 require 'open-uri'
 require 'nokogiri'
 require "prawn"
+
 
 
 def get_rss(url, count)
@@ -16,13 +19,17 @@ def get_rss(url, count)
 	end
 
 	titles[0..count].each do |node|
-	   data = data + node.inner_text + "\n\n"
-	   data = data + contents[counter].inner_text + "\n\n\n"
+	   data = data + node.inner_text.encode('utf-8') + "\n\n"
+	   data = data + contents[counter].inner_text.encode('utf-8') + "\n\n\n"
 	   counter = counter + 1
 	end
 
-	Prawn::Document.generate("rss.pdf") do
-	  text data
+	puts data
+
+	Prawn::Document.generate("rss2.pdf") do
+	  font("consola.ttf") do
+    	text data
+	  end
 	end
 
 	puts 'success!'
@@ -41,10 +48,10 @@ def get_tigromania_rss
 end
 
 # get_habr_rss()
-# get_tigerslive_rss()
+get_tigerslive_rss()
 # get_tigromania_rss()
 
-get_rss(ARGV.shift, ARGV.shift.to_i)
+# get_rss(ARGV.shift, ARGV.shift.to_i)
 
 # get_rss("http://egghead.io/feed", 5)
 
