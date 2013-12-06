@@ -2,8 +2,7 @@
 
 require 'open-uri'
 require 'nokogiri'
-require "prawn"
-
+require 'pdfkit'
 
 
 def get_rss(url, count)
@@ -19,18 +18,13 @@ def get_rss(url, count)
 	end
 
 	titles[0..count].each do |node|
-	   data = data + node.inner_text.encode('utf-8') + "\n\n"
-	   data = data + contents[counter].inner_text.encode('utf-8') + "\n\n\n"
+	   data = data + node.inner_text + "<br/><br/>"
+	   data = data + contents[counter].inner_text + "<br/><br/></br>"
 	   counter = counter + 1
 	end
 
-	puts data
-
-	Prawn::Document.generate("rss2.pdf") do
-	  font("consola.ttf") do
-    	text data
-	  end
-	end
+	kit = PDFKit.new(data, :page_size => 'Letter')
+	file = kit.to_file('pdf')
 
 	puts 'success!'
 end
@@ -48,8 +42,8 @@ def get_tigromania_rss
 end
 
 # get_habr_rss()
-get_tigerslive_rss()
-# get_tigromania_rss()
+# get_tigerslive_rss()
+get_tigromania_rss()
 
 # get_rss(ARGV.shift, ARGV.shift.to_i)
 
