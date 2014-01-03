@@ -30,7 +30,8 @@ def get_rss(url, count)
 end
 
 def get_habr_rss # don't work, need autorisation
-	get_rss('http://habrahabr.ru/rss/feed/posts/4345c787866eca0f1e6e2977b29bf275/')
+	get_rss('http://habrahabr.ru/rss/feed/posts/4345c787866eca0f1e6e2977b29bf275')
+	# get_rss('http://habrahabr.ru/rss/hubs', 10)
 end
 
 def get_tigerslive_rss
@@ -41,11 +42,17 @@ def get_tigromania_rss
 	get_rss('http://tigromania.ru/rss.xml', 5)
 end
 
+def get_d3_rss (undersite, count)
+	get_rss("http://#{undersite}.d3.ru/rss/popular", count)
+end
+
 # get_habr_rss()
 # get_tigerslive_rss()
-get_tigromania_rss()
+# get_rss("http://d3.ru/rss/popular", 15)
 
 # get_rss(ARGV.shift, ARGV.shift.to_i)
+
+get_d3_rss(ARGV.shift, ARGV.shift.to_i)
 
 # get_rss("http://egghead.io/feed", 5)
 
